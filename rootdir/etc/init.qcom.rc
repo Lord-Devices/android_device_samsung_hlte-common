@@ -32,161 +32,15 @@ on early-init
     setprop sys.boot_completed 0
 
     export LD_SHIM_LIBS /system/lib/libril.so|libshim_ril.so
-
-    mount debugfs debugfs /sys/kernel/debug
-    chmod 0755 /sys/kernel/debug
-
+     
     # efs 
     chmod 0660 /dev/block/mmcblk0p11
     chown system system /dev/block/mmcblk0p11
-
-    stop mpdecision
-
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_rate
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/timer_rate
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_slack
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/timer_slack
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/target_loads
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/target_loads
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/boost
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/boost
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/boostpulse
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/input_boost
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/input_boost
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
-    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
-
-    #Quad Core
-    chown root system /sys/devices/system/cpu/cpu1/online
-    chown root system /sys/devices/system/cpu/cpu2/online
-    chown root system /sys/devices/system/cpu/cpu3/online
-    chmod 664 /sys/devices/system/cpu/cpu1/online
-    chmod 664 /sys/devices/system/cpu/cpu2/online
-    chmod 664 /sys/devices/system/cpu/cpu3/online
-    #Kernel Freq Core 1 
-    chmod 0644 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
-    chmod 0444 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 300000
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 2265600
-    chmod 0444 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-    chmod 0444 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
-    #Kernel Freq Core 2 
-    chmod 0644 /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor interactive
-    chmod 0444 /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 300000
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 2265600
-    chmod 0444 /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq
-    chmod 0444 /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq
-    #Kernel Freq Core 3 
-    chmod 0644 /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor interactive
-    chmod 0444 /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 300000
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq 2265600
-    chmod 0444 /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq
-    chmod 0444 /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq
-    #Kernel Freq Core 4  
-    chmod 0644 /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor interactive
-    chmod 0444 /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 300000
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq 2265600
-    chmod 0444 /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq
-    chmod 0444 /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq
-
-    # Configure the hardware properly
-    write /sys/module/lpm_levels/enable_low_power/l2 4
-    write /sys/module/msm_pm/modes/cpu0/power_collapse/suspend_enabled 1
-    write /sys/module/msm_pm/modes/cpu1/power_collapse/suspend_enabled 1
-    write /sys/module/msm_pm/modes/cpu2/power_collapse/suspend_enabled 1
-    write /sys/module/msm_pm/modes/cpu3/power_collapse/suspend_enabled 1
-    write /sys/module/msm_pm/modes/cpu0/power_collapse/idle_enabled 1
-    write /sys/module/msm_pm/modes/cpu1/power_collapse/idle_enabled 1
-    write /sys/module/msm_pm/modes/cpu2/power_collapse/idle_enabled 1
-    write /sys/module/msm_pm/modes/cpu3/power_collapse/idle_enabled 1
-    write /sys/module/msm_pm/modes/cpu0/standalone_power_collapse/suspend_enabled 1
-    write /sys/module/msm_pm/modes/cpu1/standalone_power_collapse/suspend_enabled 1
-    write /sys/module/msm_pm/modes/cpu2/standalone_power_collapse/suspend_enabled 1
-    write /sys/module/msm_pm/modes/cpu3/standalone_power_collapse/suspend_enabled 1
-    write /sys/module/msm_pm/modes/cpu0/standalone_power_collapse/idle_enabled 1
-    write /sys/module/msm_pm/modes/cpu1/standalone_power_collapse/idle_enabled 1
-    write /sys/module/msm_pm/modes/cpu2/standalone_power_collapse/idle_enabled 1
-    write /sys/module/msm_pm/modes/cpu3/standalone_power_collapse/idle_enabled 1
-    write /sys/module/msm_pm/modes/cpu0/retention/idle_enabled 1
-    write /sys/module/msm_pm/modes/cpu1/retention/idle_enabled 1
-    write /sys/module/msm_pm/modes/cpu2/retention/idle_enabled 1
-    write /sys/module/msm_pm/modes/cpu3/retention/idle_enabled 1
-
-    write /sys/module/msm_thermal/core_control/enabled 0
-
-    write /sys/devices/system/cpu/cpu1/online 1
-    write /sys/devices/system/cpu/cpu2/online 1
-    write /sys/devices/system/cpu/cpu3/online 1
-
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "interactive"
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "interactive"
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "interactive"
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "interactive"
-    write /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay "19000 1400000:39000 1700000:19000"
-    write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 110
-    write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1190400
-    write /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 1
-    write /sys/devices/system/cpu/cpufreq/interactive/target_loads "85 1500000:90 1800000:70"
-    write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 39000
-    write /sys/devices/system/cpu/cpufreq/interactive/timer_rate 20000
-    write /sys/devices/system/cpu/cpufreq/interactive/max_freq_hysteresis 99000
-    write /sys/devices/system/cpu/cpufreq/interactive/timer_slack 30000
-    write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1190400
-    write /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 1
-
-    write /sys/module/msm_thermal/core_control/enabled 0
-
-    # cpu-boost
-    write /sys/module/cpu_boost/parameters/boost_ms 0
-    write /sys/module/cpu_boost/parameters/input_boost_ms 0
-    write /sys/module/cpu_boost/parameters/sync_threshold 0
-    write /sys/module/cpu_boost/parameters/input_boost_freq 0
-
-    write /sys/module/cpu_boost/parameters/migration_load_threshold 20
-    chown system system /sys/module/cpu_boost/parameters/input_boost_ms
-    chmod 664 /sys/module/cpu_boost/parameters/input_boost_ms
-
-    write /sys/class/devfreq/qcom,cpubw.34/governor "msm_cpufreq"
-    write /sys/class/kgsl/kgsl-3d0/devfreq/governor msm-adreno-tz
-
-    #Simple GPU Algorithm
-    write /sys/module/simple_gpu_algorithm/parameters/simple_gpu_activate 1
-    write /sys/module/simple_gpu_algorithm/parameters/simple_ramp_threshold 4000
-    write /sys/module/simple_gpu_algorithm/parameters/simple_laziness 6 
-
-    #Intelliplug
-    write /sys/module/intelli_plug/parameters/cpu_nr_run_threshold 853  
-    write /sys/module/intelli_plug/parameters/intelli_plug_active 1      
-    write /sys/module/intelli_plug/parameters/nr_run_hysteresis 7                         
-    write /sys/module/intelli_plug/parameters/nr_run_profile_sel 0                          
-    write /sys/module/intelli_plug/parameters/touch_boost_active 1    
-    #write /sys/module/intelli_plug/parameters/screen_off_max
-    #write /sys/module/intelli_plug/parameters/nr_possible_cores
-
-    chmod 0755 /init.kgms.sh
 
 on init
     # Set permissions for persist partition
     mkdir /persist 0771 system system
 
-    # Support legacy paths
     symlink /sdcard /storage/sdcard0
 
 
@@ -203,6 +57,11 @@ on early-boot
     chmod 0664 /sys/class/graphics/fb1/format_3d
     symlink /dev/graphics/fb1 /dev/graphics/hdmi
     chown system system /sys/class/graphics/fb1/format_3d
+
+    # Remove symlinks to avoid issues with migrate after nandroid restores
+    # Will be recreated at end of boot
+    rm /data/data/com.android.providers.telephony/databases/telephony.db
+    rm /data/data/com.android.providers.telephony/shared_prefs/preferred-apn.xml
 
 on boot
 
@@ -243,6 +102,8 @@ on boot
     chmod 2770 /dev/socket/qmux_bluetooth
     mkdir /dev/socket/qmux_gps 0770 gps gps
     chmod 2770 /dev/socket/qmux_gps
+
+    chmod 0644 /proc/cmdline
 
     #Create PERFD deamon related dirs
     mkdir /data/misc/perfd 0755 root system
@@ -293,11 +154,6 @@ on boot
     # connections on high-throughput links get dropped when
     # an ack packet comes out of order
     write /proc/sys/net/netfilter/nf_conntrack_tcp_be_liberal 1
-
-    # Enable adaptive LMK and set vmpressure_file_min
-    write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
-    write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 53059
-    write /sys/module/lowmemorykiller/parameters/debug_level 0
 
 # msm specific files that need to be created on /data
 on post-fs-data
@@ -391,6 +247,10 @@ on post-fs-data
     chmod 0660 /sys/class/sec/sec_touchkey/keypad_enable
     restorecon /sys/class/sec/sec_touchkey/keypad_enable
 
+# LiveDisplay Feature
+    chown system system /sys/devices/virtual/graphics/fb0/rgb
+    chmod 0660 /sys/devices/virtual/graphics/fb0/rgb
+
 # permission for Input Device(Touchkey).
     chmod 0660 /sys/class/input/input1/enabled
     chown system system /sys/class/input/input1/enabled
@@ -406,19 +266,6 @@ on post-fs-data
     chmod 0664 /sys/class/input/input16/enabled
     chown system input /sys/class/input/input16/enabled
 
-# permissions for S-Pen
-    chmod 0660 /sys/class/input/input3/enabled
-    chown system system /sys/class/input/input3/enabled
-    chown system radio /sys/class/sec/sec_epen/epen_firm_update
-    chown system radio /sys/class/sec/sec_epen/epen_rotation
-    chown system radio /sys/class/sec/sec_epen/epen_hand
-    chown system radio /sys/class/sec/sec_epen/epen_reset
-    chown system radio /sys/class/sec/sec_epen/epen_reset_result
-    chown system radio /sys/class/sec/sec_epen/epen_checksum
-    chown system radio /sys/class/sec/sec_epen/epen_checksum_result
-    chown system radio /sys/class/sec/sec_epen/epen_saving_mode
-    chown system radio /sys/class/sec/sec_epen/boost_level
-
 # permissions for bluetooth.
     setprop ro.bt.bdaddr_path "/efs/bluetooth/bt_addr"
     chown bluetooth net_bt_stack ro.bt.bdaddr_path
@@ -430,6 +277,9 @@ on post-fs-data
     chmod 0660 /sys/class/rfkill/rfkill0/state
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/type
+
+    # DualWave
+    chown system system /sys/kernel/DualWave/sound/DUALWAVE_CONFIG
 
 # bluetooth LPM
     chmod 0660 /proc/bluetooth/sleep/lpm
@@ -459,16 +309,13 @@ on post-fs-data
     mkdir /data/wpstiles/ 0755 shell
     mkdir /data/wiper 0755 gps qcom_oncrpc
 
-    #Create directories for gpsone_daemon services
-    mkdir /data/misc/gpsone_d 0770 system gps
-
-    #Create directories for QuIPS
-    mkdir /data/misc/quipc 0770 system gps
-
     #Create directories for Location services
     mkdir /data/misc/location 0770 gps gps
     mkdir /data/misc/location/mq 0770 gps gps
     mkdir /data/misc/location/xtwifi 0770 gps gps
+    mkdir /data/misc/location/gpsone_d 0770 system gps
+    mkdir /data/misc/location/quipc 0770 gps system
+    mkdir /data/misc/location/gsiff 0770 gps gps
 
     #Create directory from IMS services
     mkdir /data/shared 0755
@@ -483,6 +330,7 @@ on post-fs-data
 
     # Create /data/time folder for time-services
     mkdir /data/time/ 0700 system system
+    restorecon_recursive /data/time
 
     mkdir /data/audio/ 0770 media audio
     # Enable the setgid bit on the directory
@@ -515,6 +363,7 @@ on post-fs-data
     chmod 0640 /efs/gyro_cal_data
     restorecon /efs/gyro_cal_data
 
+
 service irsc_util /system/bin/irsc_util "/etc/sec_config"
     class main
     user root
@@ -543,7 +392,7 @@ on property:ro.debuggable=1
 service qmuxd /system/bin/qmuxd
     class main
     user root
-    group radio audio bluetooth gps qcom_diag log
+    group radio audio bluetooth gps qcom_diag
 
 service netmgrd /system/bin/netmgrd
     class main
@@ -593,6 +442,14 @@ service macloader /system/bin/macloader
     class main
     oneshot
 
+service ril-daemon /system/bin/rild
+    class main
+    socket rild stream 660 root radio
+    socket sap_uim_socket1 stream 660 bluetooth bluetooth
+    socket rild-debug stream 660 radio system
+    user root
+    group radio cache inet misc audio log readproc wakelock qcom_diag net_raw
+
 on property:init.svc.macloader=stopped
     chown system root /data/.cid.info
     chmod 0664 /data/.cid.info
@@ -600,17 +457,97 @@ on property:init.svc.macloader=stopped
     chmod 0664 /data/.rev
 # end of wifi
 
-service wifi-crda /system/bin/sh /system/etc/init.crda.sh
-   class late_start
-   user root
-   disabled
-   oneshot
-
 on property:sys.boot_completed=1
-    write /sys/block/mmcblk0/queue/scheduler row
+    setprop sys.io.scheduler bfq
+
+    # Configure the hardware properly
+    write /sys/module/lpm_levels/enable_low_power/l2 4
+    write /sys/module/msm_pm/modes/cpu0/power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu1/power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu2/power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu3/power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu0/power_collapse/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu1/power_collapse/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu2/power_collapse/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu3/power_collapse/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu0/standalone_power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu1/standalone_power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu2/standalone_power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu3/standalone_power_collapse/suspend_enabled 1
+    write /sys/module/msm_pm/modes/cpu0/standalone_power_collapse/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu1/standalone_power_collapse/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu2/standalone_power_collapse/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu3/standalone_power_collapse/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu0/retention/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu1/retention/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu2/retention/idle_enabled 1
+    write /sys/module/msm_pm/modes/cpu3/retention/idle_enabled 1
+
+    write /sys/module/msm_thermal/core_control/enabled 0
+
+    write /sys/devices/system/cpu/cpu1/online 1
+    write /sys/devices/system/cpu/cpu2/online 1
+    write /sys/devices/system/cpu/cpu3/online 1
+
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "interactive"
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "interactive"
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "interactive"
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "interactive"
+    write /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay "19000 1400000:39000 1700000:19000"
+    write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 99
+    write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1190400
+    write /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 1
+    write /sys/devices/system/cpu/cpufreq/interactive/target_loads "85 1500000:90 1800000:70"
+    write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 40000
+    write /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor 100000
+    write /sys/devices/system/cpu/cpufreq/interactive/timer_rate 30000
+
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 300000
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 300000
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 300000
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 300000
+    chown root system /sys/devices/system/cpu/cpu1/online
+    chown root system /sys/devices/system/cpu/cpu2/online
+    chown root system /sys/devices/system/cpu/cpu3/online
+    chmod 664 /sys/devices/system/cpu/cpu1/online
+    chmod 664 /sys/devices/system/cpu/cpu2/online
+    chmod 664 /sys/devices/system/cpu/cpu3/online
+
+    write /sys/module/msm_thermal/core_control/enabled 1
+
+    write /sys/module/cpu_boost/parameters/boost_ms 20
+    write /sys/module/cpu_boost/parameters/sync_threshold 1728000
+    write /sys/module/cpu_boost/parameters/input_boost_freq 1497600
+    write /sys/module/cpu_boost/parameters/input_boost_ms 40
+
+    write /sys/class/devfreq/qcom,cpubw.42/governor "msm_cpufreq"
+    write /sys/class/kgsl/kgsl-3d0/devfreq/governor msm-adreno-tz
+
+    write /dev/cpuctl/cpu.notify_on_migrate 1
+    
+
+    # permissions for S-Pen
+    chmod 0664 /sys/class/input/input3/enabled
+    chown system input /sys/class/input/input3/enabled
+    chown system radio /sys/class/sec/sec_epen/epen_firm_update
+    chown system radio /sys/class/sec/sec_epen/epen_rotation
+    chown system radio /sys/class/sec/sec_epen/epen_hand
+    chown system radio /sys/class/sec/sec_epen/epen_reset
+    chown system radio /sys/class/sec/sec_epen/epen_reset_result
+    chown system radio /sys/class/sec/sec_epen/epen_checksum
+    chown system radio /sys/class/sec/sec_epen/epen_checksum_result
+    chown system radio /sys/class/sec/sec_epen/epen_saving_mode
+    chown system radio /sys/class/sec/sec_epen/boost_level
 
 # Post boot services
-    stop mpdecision
+    rm /data/system/perfd/default_values
+    start mpdecision
+
+# Symlink telephony.db and preferred-apn.xml
+    mkdir /data/data/com.android.providers.telephony/databases 0700 radio radio
+    mkdir /data/data/com.android.providers.telephony/shared_prefs 0700 radio radio
+    symlink /data/user_de/0/com.android.providers.telephony/databases/telephony.db /data/data/com.android.providers.telephony/databases/telephony.db
+    symlink /data/user_de/0/com.android.providers.telephony/shared_prefs/preferred-apn.xml /data/data/com.android.providers.telephony/shared_prefs/preferred-apn.xml
 
 service hostapd /system/bin/hostapd -dddd /data/hostapd/hostapd.conf
     class late_start
@@ -638,8 +575,15 @@ service hcidump /system/bin/sh /system/etc/hcidump.sh
     disabled
     oneshot
 
-service charger /charger
+service charger /sbin/healthd -c
     class charger
+    critical
+    seclabel u:r:healthd:s0
+
+service sec-sh /system/bin/sh /system/etc/init.sec.boot.sh
+    class main
+    user root
+    oneshot
 
 # Disable SSR to SoC restart
 on property:persist.sys.ssr.restart_level=1
@@ -658,9 +602,3 @@ on property:persist.sys.ssr.restart_level=3
     write /sys/bus/msm_subsys/devices/subsys1/restart_level related
     write /sys/bus/msm_subsys/devices/subsys2/restart_level related
     write /sys/bus/msm_subsys/devices/subsys3/restart_level related
-
-service kgms /system/bin/sh /init.kgms.sh
-    class late_start
-    user root
-    group root
-    oneshot
